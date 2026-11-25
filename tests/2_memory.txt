@@ -1,0 +1,32 @@
+# TEST 2 - Memory manager: contiguous allocation with first / best / worst fit
+# Expected: holes appear at 16K and 56K after the io jobs are killed;
+#           best-fit puts the new job in a 24K hole, worst-fit in the big hole at the end;
+#           when memory is full, new jobs wait in the NEW state.
+mem first
+burn 30 &
+io 500 &
+burn 30 &
+io 500 &
+burn 30 &
+burn 30 &
+sleep 20
+mem
+kill 2
+kill 4
+sleep 50
+mem
+mem worst
+burn 5 &
+sleep 20
+mem
+mem best
+burn 5 &
+sleep 20
+mem
+burn 5 &
+burn 5 &
+burn 5 &
+sleep 20
+mem
+ps
+exit

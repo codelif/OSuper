@@ -1,0 +1,22 @@
+# TEST 8 - File system and shell extras
+# Expected: a 300-line file (14.6 KB) needs the indirect block; stat lists all blocks;
+#           fsck reports a clean file system; < >> | grep head sort work;
+#           nap sleeps without using the CPU (SLEEPING state, 0 ms CPU); history, !10 repeats sort.
+gen 300 > big.txt
+stat big.txt
+df
+fsck
+grep 99: big.txt
+cat big.txt | head 3
+echo zebra > s.txt
+echo apple >> s.txt
+echo mango >> s.txt
+sort < s.txt
+wc < s.txt
+nap 300 &
+sleep 50
+ps
+wait
+history
+!10
+exit

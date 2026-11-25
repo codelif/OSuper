@@ -1,0 +1,50 @@
+# TEST 6 - Page cache: FIFO / LRU / CLOCK page replacement with 8 frames
+# Workload: a small "hot" file h.txt is read again and again between two
+# 5-block files, so 11 different blocks compete for 8 frames.
+# Expected: LRU keeps the hot block and has the fewest page faults (21 vs 23);
+#           FIFO throws the hot block out because it was loaded first;
+#           CLOCK acts like FIFO here because every frame's reference bit is set.
+gen 50 > a.txt
+gen 50 > b.txt
+echo i am hot > h.txt
+gen 100 > c.txt
+cache fifo
+wc c.txt
+reset
+wc h.txt
+wc a.txt
+wc h.txt
+wc b.txt
+wc h.txt
+wc a.txt
+wc h.txt
+wc b.txt
+wc h.txt
+cache
+cache lru
+wc c.txt
+reset
+wc h.txt
+wc a.txt
+wc h.txt
+wc b.txt
+wc h.txt
+wc a.txt
+wc h.txt
+wc b.txt
+wc h.txt
+cache
+cache clock
+wc c.txt
+reset
+wc h.txt
+wc a.txt
+wc h.txt
+wc b.txt
+wc h.txt
+wc a.txt
+wc h.txt
+wc b.txt
+wc h.txt
+cache
+exit

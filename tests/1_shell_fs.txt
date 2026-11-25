@@ -1,0 +1,14 @@
+# TEST 1 - Shell + File system: create, read, copy, delete files; pipes; redirection
+# Expected: wc reports 40 lines / 400 words both directly and through a pipe,
+#           copy.txt has the same size as big.txt, rm frees its blocks.
+gen 40 > big.txt
+echo hello from toyOS > hello.txt
+ls
+cat hello.txt
+wc big.txt
+cat big.txt | wc
+cp big.txt copy.txt
+ls
+rm copy.txt
+ls
+exit

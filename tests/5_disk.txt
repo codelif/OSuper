@@ -1,0 +1,62 @@
+# TEST 5 - Disk scheduling: 5 jobs x 25 random reads each, under every algorithm
+# Expected: SSTF and LOOK move the head least, FCFS a lot; C-SCAN counts its return sweep, so
+#           with a short queue it can move even more than FCFS.
+# Finally disksim runs all six algorithms on the textbook queue (head at 53).
+disk fcfs
+reset
+io 25 &
+io 25 &
+io 25 &
+io 25 &
+io 25 &
+sleep 40
+disk
+wait
+disk
+disk sstf
+reset
+io 25 &
+io 25 &
+io 25 &
+io 25 &
+io 25 &
+wait
+disk
+disk scan
+reset
+io 25 &
+io 25 &
+io 25 &
+io 25 &
+io 25 &
+wait
+disk
+disk cscan
+reset
+io 25 &
+io 25 &
+io 25 &
+io 25 &
+io 25 &
+wait
+disk
+disk look
+reset
+io 25 &
+io 25 &
+io 25 &
+io 25 &
+io 25 &
+wait
+disk
+disk clook
+reset
+io 25 &
+io 25 &
+io 25 &
+io 25 &
+io 25 &
+wait
+disk
+disksim 53 98 183 37 122 14 124 65 67
+exit

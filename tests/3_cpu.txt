@@ -1,0 +1,46 @@
+# TEST 3 - CPU scheduling: same workload (burn 4, burn 1, burn 2) under each policy
+# Expected: SJF gives the lowest average waiting time once it has learnt the burst
+#           lengths; RR interleaves jobs in 50 ms slices; PRIO runs nice 1 first;
+#           MLFQ keeps the I/O bound job responsive next to a CPU bound job.
+policy fcfs
+reset
+burn 4 &
+burn 1 &
+burn 2 &
+wait
+gantt
+stats
+policy sjf
+burn 4
+burn 1
+burn 2
+reset
+burn 4 &
+burn 1 &
+burn 2 &
+ps
+wait
+gantt
+stats
+policy rr 50
+reset
+burn 4 &
+burn 1 &
+burn 2 &
+wait
+gantt
+stats
+policy prio 50
+reset
+nice 7 burn 2 &
+nice 1 burn 2 &
+nice 4 burn 2 &
+wait
+gantt
+policy mlfq 20
+reset
+burn 4 &
+io 30 &
+wait
+stats
+exit

@@ -1,0 +1,24 @@
+# TEST 4 - Synchronization and deadlock
+# Expected: (a) pipe = producer/consumer, wc gets all 200 lines;
+#           (b) the writer (gen > big.txt) waits on file.wrt while readers are reading;
+#           (c) the 5 philosophers deadlock, 'deadlock' prints the cycle, kill recovers;
+#           (d) 'philo safe' (resource ordering) never deadlocks.
+gen 200 | wc
+gen 250 > big.txt
+cat big.txt | wc &
+wc big.txt &
+gen 5 > big.txt &
+sleep 10
+ps
+wait
+wc big.txt
+philo
+wait
+ps
+deadlock
+kill 9
+wait
+philo safe
+wait
+deadlock
+exit

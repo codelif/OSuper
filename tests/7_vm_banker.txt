@@ -1,0 +1,18 @@
+# TEST 7 - Virtual memory page replacement and deadlock avoidance
+# Expected: (a) textbook string with 3 frames: FIFO 15, LRU 12, OPT 9 page faults;
+#           (b) Belady's anomaly: FIFO gives 9 faults with 3 frames but 10 with 4;
+#           (c) banker's algorithm (total 10 5 7) keeps the state safe, delays unsafe
+#               requests, and all five jobs finish without deadlock.
+pagesim 3 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1
+pagesim 3 1 2 3 4 1 2 5 1 2 3 4 5
+pagesim 4 1 2 3 4 1 2 5 1 2 3 4 5
+res 7 5 3 &
+res 3 2 2 &
+res 9 0 2 &
+res 2 2 2 &
+res 4 3 3 &
+sleep 120
+banker
+wait
+banker
+exit
