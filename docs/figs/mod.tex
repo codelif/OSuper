@@ -1,0 +1,17 @@
+\begin{tikzpicture}[x=1cm, y=1cm, m/.style={box, minimum width=3.4cm, minimum height=0.9cm, font=\footnotesize}]
+  \node[m, fill=cShell] (m1) at (0,0) {\textbf{M1} Shell + programs};
+  \node[m, fill=cShell] (m2) at (0,-2.2) {\textbf{M2} Memory manager};
+  \node[m, fill=cKern] (m3) at (5.8,0) {\textbf{M3} Processes + CPU};
+  \node[m, fill=cSync] (m4) at (5.8,-2.2) {\textbf{M4} Synchronization};
+  \node[m, fill=cStore] (m5) at (11.6,0) {\textbf{M5} Disk scheduling};
+  \node[m, fill=cStore] (m6) at (11.6,-2.2) {\textbf{M6} Cache + file system};
+  \node[draw, dashed, rounded corners, fit=(m1)(m2), inner sep=6pt, label={[font=\footnotesize]below:\texttt{main.c} -- Harsh}] {};
+  \node[draw, dashed, rounded corners, fit=(m3)(m4), inner sep=6pt, label={[font=\footnotesize]below:\texttt{kernel.c} -- Karvy}] {};
+  \node[draw, dashed, rounded corners, fit=(m5)(m6), inner sep=6pt, label={[font=\footnotesize]below:\texttt{fs.c} -- Rudra}] {};
+  \draw[arr] (m1) -- node[above, font=\scriptsize, fill=white, inner sep=1pt]{spawn} (m3);
+  \draw[arr] (m3) -- node[above, font=\scriptsize, sloped]{allocate} (m2);
+  \draw[arr] (m5) -- node[above, font=\scriptsize, fill=white, inner sep=1pt]{I/O done} (m3);
+  \draw[arr] (m6) -- node[right, font=\scriptsize, fill=white, inner sep=1pt]{requests} (m5);
+  \draw[arr] (m6) -- node[above, font=\scriptsize, fill=white, inner sep=1pt]{R--W locks} (m4);
+  \draw[arr] (m4) -- node[right, font=\scriptsize, fill=white, inner sep=1pt]{block / wake} (m3);
+\end{tikzpicture}

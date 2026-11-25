@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+  \foreach \i/\p in {0/9,1/10,2/11,3/12,4/13} {
+    \node[draw, circle, fill=cSync, minimum size=1.15cm, font=\small] (p\i) at ({90-72*\i}:2.3) {P\p};
+  }
+  \foreach \i/\j/\f in {0/1/fork1, 1/2/fork2, 2/3/fork3, 3/4/fork4, 4/0/fork0} {
+    \draw[arr, red!70!black] (p\i) to[bend left=18] node[font=\scriptsize, sloped, above]{\f} (p\j);
+  }
+  \node[font=\small, align=left, anchor=west] at (3.6,0) {Each philosopher holds its left fork\\and waits for the right one, which is\\held by its neighbour.\\[0.3em]\texttt{DEADLOCK: cycle P9 -> P10 -> P11}\\\texttt{\ \ -> P12 -> P13 -> P9}};
+\end{tikzpicture}

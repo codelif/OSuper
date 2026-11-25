@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+  \node[box, fill=cShell, minimum height=1cm, minimum width=2.6cm] (prod) at (0,0) {\textbf{cat big.txt}\\producer};
+  \foreach \i in {0,...,7} \draw[fill=\ifnum\i<5 jB\else white\fi] (2.6+\i*0.6,-0.3) rectangle (3.2+\i*0.6,0.3);
+  \node[font=\scriptsize] at (5.0,0.6) {bounded buffer (64 slots)};
+  \node[box, fill=cShell, minimum height=1cm, minimum width=2.6cm] (cons) at (10,0) {\textbf{wc}\\consumer};
+  \draw[arr] (prod) -- (2.6,0);
+  \draw[arr] (7.4,0) -- (cons);
+  \node[font=\scriptsize, align=center, below=0.25cm of prod] {\texttt{P(empty); P(mutex);}\\\texttt{put item;}\\\texttt{V(mutex); V(full);}};
+  \node[font=\scriptsize, align=center, below=0.25cm of cons] {\texttt{P(full); P(mutex);}\\\texttt{take item;}\\\texttt{V(mutex); V(empty);}};
+\end{tikzpicture}

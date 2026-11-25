@@ -1,0 +1,15 @@
+\begin{tikzpicture}[node distance=0.45cm and 0.8cm, dec/.style={draw, diamond, aspect=2.2, fill=cStore, font=\scriptsize, align=center, inner sep=1pt}]
+  \node[box, fill=cShell] (s) {\texttt{bread(blk)}};
+  \node[dec, below=of s] (hit) {block in\\cache?};
+  \node[box, fill=cKern, right=1.2cm of hit] (h) {hit: copy data,\\update LRU time / ref bit};
+  \node[box, fill=cStore, below=of hit] (v) {page fault: pick victim\\FIFO / LRU / CLOCK};
+  \node[box, fill=cStore, below=of v] (q) {add request to disk queue,\\job $\rightarrow$ DISKWAIT};
+  \node[box, fill=cStore, right=1.2cm of q] (d) {disk thread: choose by\\FCFS SSTF SCAN\\C-SCAN LOOK C-LOOK};
+  \node[box, fill=cKern, below=of d] (w) {I/O done $\rightarrow$ job READY,\\copy data};
+  \draw[arr] (s) -- (hit);
+  \draw[arr] (hit) -- node[above, font=\scriptsize]{yes} (h);
+  \draw[arr] (hit) -- node[right, font=\scriptsize]{no} (v);
+  \draw[arr] (v) -- (q);
+  \draw[arr] (q) -- (d);
+  \draw[arr] (d) -- (w);
+\end{tikzpicture}
